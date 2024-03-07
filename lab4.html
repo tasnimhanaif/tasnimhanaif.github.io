@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordering Website</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Welcome to Our Store!</h1>
+    <script>
+        alert("Hello, welcome to our store!");
+        let name = prompt("Please enter your name:");
+        let item = prompt("Enter the item you want to order:");
+        let quantity = parseInt(prompt("How many would you like? (1-99):"));
+        let today = new Date();
+        let arrivalDate = new Date(today);
+        arrivalDate.setDate(today.getDate() + 7);
+        let greeting = "";
+        if (today.getHours() < 12) {
+            greeting = "Good morning";
+        } else if (today.getHours() < 18) {
+            greeting = "Good afternoon";
+        } else {
+            greeting = "Good evening";
+        }
+        document.write(`<p>${greeting}, ${name}! Thank you for ordering ${quantity} ${item}(s). Your order will arrive on ${arrivalDate.toDateString()}.</p>`);
+    </script>
+</body>
+</html>
