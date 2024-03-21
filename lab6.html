@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Facts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #0076b3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0076b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cat Facts</h1>
+    <button id="fetchButton">Fetch Data</button>
+    <table id="factTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fact</th>
+            </tr>
+        </thead>
+        <tbody id="factTableBody">
+        </tbody>
+    </table>
+    <img id="catImage" src="beautiful-smooth-haired-red-cat-lies-on-the-sofa-royalty-free-image-1678488026.jpg" alt="Cat Image">
+
+    <script>
+        async function fetchData() {
+            const url = 'https://brianobruno.github.io/cats.json';
+            const options = {
+                method: 'GET'
+            };
+
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+
+                data.facts.sort((a, b) => a.factId - b.factId);
+
+                const tableBody = document.getElementById("factTableBody");
+                tableBody.innerHTML = "";
+                data.facts.forEach(fact => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${fact.factId}</td>
+                        <td>${fact.text}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                const catImage = document.getElementById("catImage");
+                catImage.src = data.catPhoto;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        document.getElementById("fetchButton").addEventListener("click", fetchData);
+    </script>
+</body>
+</html>
